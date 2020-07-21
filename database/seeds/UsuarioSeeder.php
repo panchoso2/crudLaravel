@@ -4,14 +4,10 @@ use Illuminate\Database\Seeder;
 
 class UsuarioSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+   
     public function run()
     {
-        
+        // generar 100 entradas con datos aleatorios en la BD
         $faker = \Faker\Factory::create();
 
         for($i = 0; $i <= 100; $i++):
@@ -20,10 +16,9 @@ class UsuarioSeeder extends Seeder
                 'Nombre' => $faker->firstName,
                 'Apellido' => $faker->lastName,
                 'Email' => $faker->email,
-                'Fecha de nacimiento' => $faker->date,
+                'FechaNacimiento' => $faker->date,
                 'Password' => Hash::make($faker->password),
             ]);
             endfor;
-        
     }
 }

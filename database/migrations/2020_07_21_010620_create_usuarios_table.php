@@ -20,7 +20,7 @@ class CreateUsuariosTable extends Migration
             $table->string('Nombre');
             $table->string('Apellido');
             $table->string('Email')->unique();
-            $table->date('Fecha de nacimiento');
+            $table->date('FechaNacimiento');
             $table->string('Password');
         });
     }

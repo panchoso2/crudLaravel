@@ -9,4 +9,4 @@ Route::get('/', function () {
 
 
 
-Route::resource('usuarios','UsuarioController');
+Route::get('index', 'UsuarioController@index');
