@@ -34,8 +34,8 @@
           <td>{{$user->Apellido}}</td>
           <td>{{$user->Email}}</td>
           <td>{{$user->FechaNacimiento}}</td>
-          <td><a href="{{ url('/destroy/' . $user->id) }}">Eliminar</a></td>
-          <td>Editar</td>
+          <td><a href="{{ url('/destroy/' . $user->id) }}" style="color:#FF0000;">Eliminar</a></td>
+          <td><a href="{{ url('/edit/' . $user->id) }}">Editar</a></td>
         </tr>
         @endforeach
     </tbody>

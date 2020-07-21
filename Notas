@@ -1,3 +1,10 @@
-1. Separar CSS de HTML
-2. Mejorar sistema de rutas (formulario)
-3. Se creo una tabla usuarios para esto
+1. Se creo una tabla usuarios para esto
+
+
+To-Do-List:
+1. Encriptar la contraseña en la BD
+2. Validaciones
+3. Separar CSS de HTML
+4. Mejorar enrutamiento (links en formularios, botones, etc.)
+5. Subir imágenes
+6. Editar usuarios

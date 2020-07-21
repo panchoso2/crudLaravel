@@ -19,3 +19,5 @@ Route::get('/layout', function(){
 Route::get('/create', 'UsuarioController@create');
 Route::post('/store', 'UsuarioController@store');
 Route::get('destroy/{id}', 'UsuarioController@destroy');
+Route::get('/edit/{id}', 'UsuarioController@edit');
+Route::post('/update', 'UsuarioController@update');

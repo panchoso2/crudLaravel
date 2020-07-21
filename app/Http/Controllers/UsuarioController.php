@@ -26,6 +26,7 @@ class UsuarioController extends Controller
 
     public function store(Request $request)
     {
+        // create new Usuario and set attributes
         $user = new Usuario;
         $user->Nombre = $request->input('nameInput');
         $user->Apellido = $request->input('lastNameInput');
@@ -41,38 +42,35 @@ class UsuarioController extends Controller
         return redirect('index');
     }
 
-  
-
-
-
+    /*
     public function show($id)
     {
         $user = Usuario::find($id);
         return view('Usuario.show', compact('user'));
     }
-
+    */
    
     public function edit($id)
     {
         $user = Usuario::find($id);
-        return view('Usuario.edit', compact('user'));
+        return view('edit', compact('user'));
     }
 
    
-
-
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $updateData = $request->validate([
-            'Rut' => 'required|max:255',
-            'Nombre' => 'required|max:255',
-            'Apellido' => 'required|max:255',
-            'email' => 'required|max:255',
-            'Fecha de nacimiento' => 'required|max:255',
-            'Password' => 'required|max:255',
-        ]);
-        Usuario::whereId($id)->update($updateData);
-        return redirect()->route('Usuario.index')->with('completed', 'Usuario actualizado');
+        // find Usuario and update all attributes
+        $id = $request->input('id');
+        $user = Usuario::find($id);
+        
+        $user->Nombre = $request->input('nameInput');
+        $user->Apellido = $request->input('lastNameInput');
+        $user->Rut = $request->input('rutInput');
+        $user->Email = $request->input('emailInput');
+        $user->password = $request->input('passwordInput');
+
+        $user->save();
+        return redirect('index');
     }
 
     
