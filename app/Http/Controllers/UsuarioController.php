@@ -19,25 +19,26 @@ class UsuarioController extends Controller
 
     public function create()
     {
-        return view('usuarios.create');
+        return view('create');
     }
 
  
 
     public function store(Request $request)
     {
-        $storeData = $request->validate([
-            'Rut' => 'required|max:255',
-            'Nombre' => 'required|max:255',
-            'Apellido' => 'required|max:255',
-            'email' => 'required|max:255',
-            'Fecha de nacimiento' => 'required|max:255',
-            'Password' => 'required|max:255',
-        ]);
+        $user = new Usuario;
+        $user->Nombre = $request->input('nameInput');
+        $user->Apellido = $request->input('lastNameInput');
+        $user->Rut = $request->input('rutInput');
+        $user->Email = $request->input('emailInput');
+        $user->password = $request->input('passwordInput');
 
-        $user = Usuario::create($storeData);
-
-        return redirect('/usuarios')->with('sucess','Usuario guardado');
+        // format date type to mysql format
+        $newDate = date("Y-m-d", strtotime($request->input('dateInput')));
+        $user->FechaNacimiento = $newDate;
+        
+        $user->save();
+        return redirect('index');
     }
 
   
@@ -83,5 +84,13 @@ class UsuarioController extends Controller
         $user = Usuario::findOrFail($id);
         $user->delete();
         return redirect()->route('Usuario.index')->with('completed', 'Usuario eliminado');
+    }
+
+
+
+    public function debug(Request $request)
+    {
+        $name = $request->nameInput;
+        return view('debug', compact('name'));
     }
 }

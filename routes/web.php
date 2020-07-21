@@ -9,8 +9,12 @@ Route::get('/', function () {
 
 
 
-Route::get('index', 'UsuarioController@index');
-Route::get('layout', function(){
+Route::get('/index', 'UsuarioController@index');
+Route::get('/layout', function(){
     return view('layout');
 });
-Route::get('create', 'UsuarioController@create');
+
+
+
+Route::get('/create', 'UsuarioController@create');
+Route::post('/store', 'UsuarioController@store');
