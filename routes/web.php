@@ -10,3 +10,7 @@ Route::get('/', function () {
 
 
 Route::get('index', 'UsuarioController@index');
+Route::get('layout', function(){
+    return view('layout');
+});
+Route::get('create', 'UsuarioController@create');
