@@ -3,9 +3,16 @@
 @section('content')
 
 <div class="row">
-<div class="col-sm-12">
-    <h1>Usuarios</h1>    
-  <table class="table table-striped">
+
+  <div class="col-sm-12" style="display: inline-block; align: center; max-width:60%; margin-left:20%">
+    <h1 style="float: left">Usuarios</h1>
+    <button class="btn btn-primary" type="button" onclick="window.location='{{ url("/create") }}'"> 
+      Crear Usuario
+    </button>
+  </div>  
+  <div class="col-sm-12">
+    
+    <table class="table table-striped">
     <thead>
         <tr>
           <td>Foto</td>
@@ -27,7 +34,7 @@
           <td>{{$user->Apellido}}</td>
           <td>{{$user->Email}}</td>
           <td>{{$user->FechaNacimiento}}</td>
-          <td>Eliminar</td>
+          <td><a href="{{ url('/destroy/' . $user->id) }}">Eliminar</a></td>
           <td>Editar</td>
         </tr>
         @endforeach

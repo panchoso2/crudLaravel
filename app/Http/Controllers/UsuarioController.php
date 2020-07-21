@@ -83,14 +83,8 @@ class UsuarioController extends Controller
     {
         $user = Usuario::findOrFail($id);
         $user->delete();
-        return redirect()->route('Usuario.index')->with('completed', 'Usuario eliminado');
+        return redirect('index');
+
     }
-
-
-
-    public function debug(Request $request)
-    {
-        $name = $request->nameInput;
-        return view('debug', compact('name'));
-    }
+   
 }

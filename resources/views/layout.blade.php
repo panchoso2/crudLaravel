@@ -52,7 +52,7 @@
           }
         }
       }
-      h1 {
+      h1, h2 {
         margin: auto;
         padding: 20px;
         text-align: center;
@@ -66,6 +66,13 @@
         align: center;
         width: 40%;
         padding: 20px;
+      }
+      button.btn.btn-primary{
+        text-align: center;
+        margin: auto;
+        padding: 10px;
+        float: right;
+        margin-top:20px;
       }
     </style>
   </head>
