@@ -3,14 +3,12 @@
 
 To-Do-List:
 1. Encriptar la contraseña en la BD
-2. Validaciones del cliente
 3. Separar CSS de HTML
 4. Mejorar enrutamiento (links en formularios, botones, etc.)
 5. Subir imágenes
 6. Modal para confirmar
-7. span de errores
 8. validar estructura de ruts
 9. Validaciones del servidor
 10. arreglar calendario
-11. arreglar el span de rut invalido cuando esta vacio
 12. fusionar create y edit
+13. cambiar validaciones a unica funcion

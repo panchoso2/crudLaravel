@@ -6,6 +6,12 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 
+    // validator vars
+    var rutValidator = false;
+    var emailValidator = false;
+    var passwordValidator = false;
+
+
     // datepicker
     $( function() {
         $( "#dateInput" ).datepicker();
@@ -49,6 +55,7 @@
             if (rut.length == 1) {
                 errorSpan.innerHTML = 'Rut inválido';
                 document.getElementById('submitButton').disabled = true;
+                rutValidator = false;
                 return false;
             }
 
@@ -60,9 +67,12 @@
 
             if (long == 0) {
                 errorSpan.innerHTML = '';
+                rutValidator = false;
+                return false;
             } else if (long < 7) {
                 errorSpan.innerHTML = 'Rut inválido';
                 document.getElementById('submitButton').disabled = true;
+                rutValidator = false;
                 return false;
             } else {
                 errorSpan.innerHTML = '';
@@ -100,14 +110,16 @@
             if (final == verif) {
                 errorSpan.innerHTML = '';
                 document.getElementById('submitButton').disabled = false;
+                rutValidator = true;
             } else {
                 errorSpan.innerHTML = 'Rut inválido';
                 document.getElementById('submitButton').disabled = true;
+                rutValidator = false;
                 return false;
             }
 
 
-            // validate if ruts already registered
+            // validate if rut is already registered
             $.ajax({
                 type: 'post',
                 url: "{{ route('ajaxRut') }}",
@@ -119,10 +131,12 @@
                     if (data){
                         $('#rutError').html('Este Rut ya se encuentra en uso');
                         document.getElementById('submitButton').disabled = true;
+                        rutValidator = false;
                         return false;
                     }
                     else{
                         document.getElementById('submitButton').disabled = false;
+                        rutValidator = true;
                     }
                 }
             });
@@ -146,13 +160,15 @@
             // validate email
             if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
                 document.getElementById('submitButton').disabled = false;
+                emailValidator = true;
             } else {
                 $('#emailError').html('Email no válido');
                 document.getElementById('submitButton').disabled = true;
+                emailValidator = false;
                 return false;
             }
 
-            // validate if ruts already registered
+            // validate if email is already registered
             $.ajax({
                 type: 'post',
                 url: "{{ route('ajaxEmail') }}",
@@ -164,11 +180,13 @@
                     if (data){
                         $('#emailError').html('Este Email ya se encuentra en uso');
                         document.getElementById('submitButton').disabled = true;
+                        emailValidator = false;
                         return false;
                     }
                     else{
                         $('#emailError').html('');
                         document.getElementById('submitButton').disabled = false;
+                        emailValidator = true;
                     }
                 }
             });
@@ -190,20 +208,32 @@
             } else if (password != repeatedPassword){
                 passwordErrorSpan.innerHTML = 'Contraseñas no coinciden';
                 document.getElementById('submitButton').disabled = true;
+                passwordValidator = false;
                 return false;
             } else {
                 passwordErrorSpan.innerHTML = '';
                 document.getElementById('submitButton').disabled = false;
+                passwordValidator = true;
             }
         });
     });
+
+
+    function validateSubmit(){
+        if (rutValidator == false || emailValidator == false || passwordValidator == false){
+            document.getElementById('submitButton').disabled = true;
+            return false;
+        } else {
+            return true;
+        }
+    }
 
 </script>
 
 
 @section('content')
     <h1>Crear Usuario</h1> 
-    <form action="/store" method="POST" role="form">
+    <form action="/store" method="POST" role="form" onsubmit="return validateSubmit()">
         @csrf
         <div class="form-group">
             <label for="nameInput">Nombres</label>
