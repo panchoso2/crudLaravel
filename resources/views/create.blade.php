@@ -11,10 +11,8 @@
         $( "#dateInput" ).datepicker();
     });
 
-    // 
       
-   
-    // block certain keys on input
+    // block certain keys on rutInput
     (function($) {
         $.fn.inputFilter = function(inputFilter) {
             return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
@@ -32,6 +30,7 @@
         };
     }(jQuery));
 
+
     // only numbers, k and K can be typed in input
     $(document).ready(function() {
         $("#rutInput").inputFilter(function(value) {
@@ -40,30 +39,34 @@
     });
 
 
-
-
-
     // check if Rut is already on DB
     $(function(){
         $('#rutInput').on('change',function(){
-            
-            
+                    
             var rut = $(this).val();
-            
+            var errorSpan = document.getElementById('rutError');
+
+            if (rut.length == 1) {
+                errorSpan.innerHTML = 'Rut inválido';
+                document.getElementById('submitButton').disabled = true;
+                return false;
+            }
 
             // check if rut is valid
             verif = rut.slice(-1);
             body = rut.substring(0, rut.length - 1);
             long = body.length;
-            var errorSpan = document.getElementById('rutError');
+            
 
             if (long == 0) {
                 errorSpan.innerHTML = '';
             } else if (long < 7) {
                 errorSpan.innerHTML = 'Rut inválido';
-                // block submit
+                document.getElementById('submitButton').disabled = true;
+                return false;
             } else {
                 errorSpan.innerHTML = '';
+                document.getElementById('submitButton').disabled = false;
             } 
 
             if (verif == 'K') {
@@ -96,13 +99,15 @@
             // compare final with verif
             if (final == verif) {
                 errorSpan.innerHTML = '';
+                document.getElementById('submitButton').disabled = false;
             } else {
                 errorSpan.innerHTML = 'Rut inválido';
-                // block submit
+                document.getElementById('submitButton').disabled = true;
+                return false;
             }
-                
-                     
 
+
+            // validate if ruts already registered
             $.ajax({
                 type: 'post',
                 url: "{{ route('ajaxRut') }}",
@@ -113,10 +118,11 @@
                 success: function(data){
                     if (data){
                         $('#rutError').html('Este Rut ya se encuentra en uso');
-                        // block submit
+                        document.getElementById('submitButton').disabled = true;
+                        return false;
                     }
                     else{
-                        // unlock submit
+                        document.getElementById('submitButton').disabled = false;
                     }
                 }
             });
@@ -157,6 +163,6 @@
             <input required type="password" class="form-control" id="passwordInput" placeholder="Ingrese su Contraseña" name="passwordInput">
         </div>
         
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
     </form>
 @endsection
