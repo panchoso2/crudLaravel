@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Usuario;
 
+
 class UsuarioController extends Controller
 {
     
@@ -22,12 +23,22 @@ class UsuarioController extends Controller
         return view('create');
     }
 
- 
+    public function ajaxRut(Request $request)
+    {
+        // search Usuarios with the same Rut
+       $rut = $request->rut;
+       $user = Usuario::where('Rut', $rut)->first();
+    
+       return $user;
+    }
+    
 
     public function store(Request $request)
     {
+
         // create new Usuario and set attributes
         $user = new Usuario;
+
         $user->Nombre = $request->input('nameInput');
         $user->Apellido = $request->input('lastNameInput');
         $user->Rut = $request->input('rutInput');
@@ -39,6 +50,7 @@ class UsuarioController extends Controller
         $user->FechaNacimiento = $newDate;
         
         $user->save();
+
         return redirect('index');
     }
 

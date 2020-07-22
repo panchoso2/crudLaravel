@@ -17,6 +17,8 @@ Route::get('/layout', function(){
 
 
 Route::get('/create', 'UsuarioController@create');
+Route::post('/ajaxRut', 'UsuarioController@ajaxRut')->name('ajaxRut');
+
 Route::post('/store', 'UsuarioController@store');
 Route::get('destroy/{id}', 'UsuarioController@destroy');
 Route::get('/edit/{id}', 'UsuarioController@edit');
