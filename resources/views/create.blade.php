@@ -56,20 +56,26 @@
             body = rut.substring(0, rut.length - 1);
             long = body.length;
             var errorSpan = document.getElementById('rutError');
-            if (long == 0){
+
+            if (long == 0) {
                 errorSpan.innerHTML = '';
-            }else if (long < 7){
+            } else if (long < 7) {
                 errorSpan.innerHTML = 'Rut inválido';
                 // block submit
-            } else{
+            } else {
                 errorSpan.innerHTML = '';
             } 
 
+            if (verif == 'K') {
+                verif = 'k';
+            }
+
+            // calculate verif number
             var i = 0;
             var aux = 2;
             var sum = 0;
             var last = long - 1;
-            while(i < long){
+            while (i < long) {
                 if (aux == 8){
                     aux = 2;
                 }
@@ -78,15 +84,25 @@
                 last--;
                 i++;
             }
-            console.log(sum);
-            
+            mod = (Math.trunc(sum / 11)) * 11;
+            rest = sum - mod;
+            final = 11 - rest;
+            if (final == 10) {
+                final = 'k';
+            } else if ( final == 11) { 
+                final = 0;
+            }
 
+            // compare final with verif
+            if (final == verif) {
+                errorSpan.innerHTML = '';
+            } else {
+                errorSpan.innerHTML = 'Rut inválido';
+                // block submit
+            }
+                
+                     
 
-            
-            
-
-            
-            
             $.ajax({
                 type: 'post',
                 url: "{{ route('ajaxRut') }}",
