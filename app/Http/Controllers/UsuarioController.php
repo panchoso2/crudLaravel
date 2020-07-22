@@ -31,6 +31,15 @@ class UsuarioController extends Controller
     
        return $user;
     }
+
+    public function ajaxEmail(Request $request)
+    {
+        // search Usuarios with the same Email
+       $email = $request->email;
+       $user = Usuario::where('Email', $email)->first();
+    
+       return $user;
+    }
     
 
     public function store(Request $request)

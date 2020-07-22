@@ -39,9 +39,9 @@
     });
 
 
-    // check if Rut is already on DB
+    // validate Rut
     $(function(){
-        $('#rutInput').on('change',function(){
+        $('#rutInput').on('change', function(){
                     
             var rut = $(this).val();
             var errorSpan = document.getElementById('rutError');
@@ -130,12 +130,81 @@
     });
     
 
+    // validate email
+    $(function(){
+        $('#emailInput').on('change', function(){
+            
+            var email = $(this).val();
+            var emailErrorSpan = document.getElementById('emailError');
+            
+
+            if (email.length == 0){
+                emailErrorSpan.innerHTML = '';
+                return false;
+            }
+
+            // validate email
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                document.getElementById('submitButton').disabled = false;
+            } else {
+                $('#emailError').html('Email no válido');
+                document.getElementById('submitButton').disabled = true;
+                return false;
+            }
+
+            // validate if ruts already registered
+            $.ajax({
+                type: 'post',
+                url: "{{ route('ajaxEmail') }}",
+                data: {
+                    email: email,
+                    "_token": $("meta[name='csrf-token']").attr("content")
+                },
+                success: function(data){
+                    if (data){
+                        $('#emailError').html('Este Email ya se encuentra en uso');
+                        document.getElementById('submitButton').disabled = true;
+                        return false;
+                    }
+                    else{
+                        $('#emailError').html('');
+                        document.getElementById('submitButton').disabled = false;
+                    }
+                }
+            });
+        });
+    });
+
+
+
+    // compare passwords
+    $(function(){
+        $('#repeatPasswordInput').on('change', function(){
+            
+            var repeatedPassword = $(this).val();
+            var password = document.getElementById('passwordInput').value;
+            var passwordErrorSpan = document.getElementById('passwordError');
+            
+            if (repeatedPassword.length == 0){
+                passwordErrorSpan.innerHTML = '';
+            } else if (password != repeatedPassword){
+                passwordErrorSpan.innerHTML = 'Contraseñas no coinciden';
+                document.getElementById('submitButton').disabled = true;
+                return false;
+            } else {
+                passwordErrorSpan.innerHTML = '';
+                document.getElementById('submitButton').disabled = false;
+            }
+        });
+    });
+
 </script>
 
 
 @section('content')
     <h1>Crear Usuario</h1> 
     <form action="/store" method="POST" role="form">
+        @csrf
         <div class="form-group">
             <label for="nameInput">Nombres</label>
             <input required type="text" class="form-control" id="nameInput"  placeholder="Ingrese sus nombres" name="nameInput">
@@ -146,7 +215,7 @@
         </div>
         <div style="display: inline-block; width:45%; margin: 0px 0px 16px">
             <label for="rutInput">Rut</label>
-            <input required type="text" class="form-control" id="rutInput"  placeholder="Ingrese su Rut" name="rutInput" pattern="[0-9]">
+            <input required type="text" class="form-control" id="rutInput"  placeholder="Ingrese su Rut" name="rutInput">
             <span class="badge badge-light" id="rutError"></span>
         </div>
         
@@ -157,10 +226,16 @@
         <div class="form-group">
             <label for="emailInput">Email</label>
             <input required type="email" class="form-control" id="emailInput" placeholder="Ingrese su Email" name="emailInput">
+            <span class="badge badge-light" id="emailError"></span>
         </div>
         <div class="form-group">
             <label for="passwordInput">Contraseña</label>
             <input required type="password" class="form-control" id="passwordInput" placeholder="Ingrese su Contraseña" name="passwordInput">
+        </div>
+        <div class="form-group">
+            <label for="repeatPasswordInput">Repita su Contraseña</label>
+            <input required type="password" class="form-control" id="repeatPasswordInput" placeholder="Repita su Contraseña" name="repeatPasswordInput">
+            <span class="badge badge-light" id="passwordError"></span>
         </div>
         
         <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
