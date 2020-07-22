@@ -17,11 +17,11 @@ class UsuarioController extends Controller
     }
 
   
-
     public function create()
     {
         return view('create');
     }
+
 
     public function ajaxRut(Request $request)
     {
@@ -31,6 +31,7 @@ class UsuarioController extends Controller
     
        return $user;
     }
+
 
     public function ajaxEmail(Request $request)
     {
@@ -52,7 +53,7 @@ class UsuarioController extends Controller
         $user->Apellido = $request->input('lastNameInput');
         $user->Rut = $request->input('rutInput');
         $user->Email = $request->input('emailInput');
-        $user->password = $request->input('passwordInput');
+        $user->Password = $request->input('passwordInput');
 
         // format date type to mysql format
         $newDate = date("Y-m-d", strtotime($request->input('dateInput')));
@@ -70,6 +71,7 @@ class UsuarioController extends Controller
         return view('Usuario.show', compact('user'));
     }
     */
+
    
     public function edit($id)
     {
@@ -83,19 +85,15 @@ class UsuarioController extends Controller
         // find Usuario and update all attributes
         $id = $request->input('id');
         $user = Usuario::find($id);
-        
         $user->Nombre = $request->input('nameInput');
         $user->Apellido = $request->input('lastNameInput');
         $user->Rut = $request->input('rutInput');
         $user->Email = $request->input('emailInput');
-        $user->password = $request->input('passwordInput');
+        $user->Password = $request->input('passwordInput');
 
         $user->save();
         return redirect('index');
     }
-
-    
-
 
 
     public function destroy($id)

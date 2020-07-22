@@ -14,7 +14,17 @@
 
     // datepicker
     $( function() {
-        $( "#dateInput" ).datepicker();
+        $( "#dateInput" ).datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: 'dd/mm/yy',
+            yearRange: '-120:+0',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            maxDate: '0',
+        });
     });
 
       
@@ -251,7 +261,7 @@
         
         <div style="display: inline-block; float: right; width:45%; margin: 0px 0px 16px">
             <label for="dateInput">Fecha de nacimiento</label>
-            <input required type="text" class="form-control" id="dateInput" placeholder="Seleccione su fecha de nacimiento" name="dateInput" onkeypress="validar(event)">
+            <input required type="text" class="form-control" id="dateInput" placeholder="Seleccione su fecha de nacimiento" name="dateInput" onkeypress="validar(event)" autocomplete="off">
         </div>
         <div class="form-group">
             <label for="emailInput">Email</label>

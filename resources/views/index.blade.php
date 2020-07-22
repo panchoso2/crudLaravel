@@ -33,7 +33,7 @@
           <td>{{$user->Nombre}}</td>
           <td>{{$user->Apellido}}</td>
           <td>{{$user->Email}}</td>
-          <td>{{$user->FechaNacimiento}}</td>
+          <td>{{ date("d-m-Y",strtotime($user->FechaNacimiento)) }}</td>
           <td><a href="{{ url('/destroy/' . $user->id) }}" style="color:#FF0000;">Eliminar</a></td>
           <td><a href="{{ url('/edit/' . $user->id) }}">Editar</a></td>
         </tr>
