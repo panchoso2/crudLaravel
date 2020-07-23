@@ -228,7 +228,7 @@
         });
     });
 
-    // upload and validate image by ajax
+    // upload and validate image by ajax. Submit form
     $(document).ready(function(){
         $('#userForm').on('submit', function(event){
             event.preventDefault();

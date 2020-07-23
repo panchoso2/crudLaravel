@@ -13,7 +13,7 @@
 
     // user data
     var user = {!! json_encode($user) !!};
-    console.log(user);
+
     // datepicker
     $( function() {
         $( "#dateInput" ).datepicker({
@@ -229,7 +229,60 @@
         });
     });
 
+    // upload and validate image by ajax. Validate and submit form
+    $(document).ready(function(){
+        $('#userForm').on('submit', function(event){
+            event.preventDefault();
+            $.ajax({
+                url: "{{ route('ajaxAvatar') }}",
+                method: 'post',
+                data: new FormData(this),
+                dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function(data){
+                    if ( data.message == 'false' ){
+                        document.getElementById('avatarError').innerHTML = 'Archivo no válido';
+                    } else {
+                        // compare old and new data
+                        var rutInput = document.getElementById('rutInput').value;
+                        var emailInput = document.getElementById('emailInput').value;
+                        var passwordInput = document.getElementById('passwordInput').value;
+                        var repeatPasswordInput = document.getElementById('repeatPasswordInput').value;
 
+                        // image is still the same
+                        if (data.message == 'null' ){
+                            $('input[name="avatarName"]').val('{{ $user->Avatar }}');
+                        } else {
+                            $('input[name="avatarName"]').val(data.message);
+                        }
+                        
+                        // compare data
+                        if (user['Rut'] == rutInput) {
+                            rutValidator = true;
+                        }
+                        if (user['Email'] == emailInput) {
+                            emailValidator = true;
+                        }
+                        if ((user['Password'] == passwordInput) && (user['Password'] == repeatPasswordInput)) {
+                            passwordValidator = true;
+                        }
+
+                        // validate everything before submit
+                        if (rutValidator == false || emailValidator == false || passwordValidator == false){
+                            document.getElementById('submitButton').disabled = true;
+                            return false;
+                        } else {
+                            event.currentTarget.submit();
+                        }
+                    }
+                }
+            })
+        })
+    });
+
+    /*
     // this function also verifies if the input data is the same that the prefilled
     function validateSubmit(){
 
@@ -249,9 +302,6 @@
             passwordValidator = true;
         }
 
-        console.log(rutValidator);
-        console.log(emailValidator);
-        console.log(passwordValidator);
 
         // validate everything before submit
         if (rutValidator == false || emailValidator == false || passwordValidator == false){
@@ -261,13 +311,14 @@
             return true;
         }
     }
+    */
 
 </script>
 
 
 @section('content')
     <h1>Editar Usuario</h1> 
-    <form action="/update" method="POST" role="form" onsubmit="return validateSubmit()">
+    <form action="/update" method="POST" role="form" id="userForm">
         @csrf
         <div class="form-group">
             <label for="nameInput">Nombres</label>
@@ -307,9 +358,11 @@
             <br>
             <label for="avatarInput">Subir nueva imagen</label>
             <br>
-            <input type="file"  id="avatarInput" placeholder="Seleccione una imagen" name="avatarInput">
+            <input type="file"  accept="image/*" id="avatarInput" placeholder="Seleccione una imagen" name="avatarInput">
+            <span class="badge badge-light" id="avatarError"></span>
         </div>
         <input type="hidden" id="userId" name="id" value="{{ $user->id }}">
+        <input type="hidden" id="avatarName" name="avatarName" value="">
         <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
     </form>
 @endsection
