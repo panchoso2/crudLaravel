@@ -77,8 +77,21 @@
         float: right;
         margin-top:20px;
       }
-      div.form-group{
-        
+      .circular--square {
+        border-radius:50%;
+      }
+      .circular--landscape{
+        display: inline-block;
+        position: relative;
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+        border-radius: 50%;
+      }
+      .cirular--landscape img{
+        width: auto;
+        height: 100%;
+        margin-left: -50px;
       }
     </style>
   </head>

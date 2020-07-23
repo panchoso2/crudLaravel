@@ -244,6 +244,7 @@
                     if ( data.message == 'false' ){
                         document.getElementById('avatarError').innerHTML = 'Archivo no válido';
                     } else {
+                        document.getElementById('avatarName').value = data.message;
                         event.currentTarget.submit();
                     }
                 }
@@ -262,6 +263,7 @@
             return true;
         }
     }
+
 
 </script>
 
@@ -305,9 +307,14 @@
         <div class="form-group">
             <label for="avatarInput">Imagen de Perfil</label>
             <input type="file" accept="image/*" id="avatarInput" placeholder="Seleccione una imagen" name="avatarInput">
+            <input type="hidden" id="avatarName" name="avatarName" value="">
             <span class="badge badge-light" id="avatarError"></span>
         </div>
-        
+
+        <img src="" id="output">
+
+
+
         <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
     </form>
 @endsection

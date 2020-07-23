@@ -28,7 +28,11 @@
     <tbody>
         @foreach($users as $user)
         <tr>
-          <td><img src="images/{{ $user->Avatar }}" style="display: block; width:100%; object-fit: fill; max-width: 80px; max-height: 80px; border-radius:50%"/></td>
+          <td>
+            <div class="circular--landscape">
+              <img src="images/{{ $user->Avatar }}">
+            </div>
+          </td>
           <td>{{ $user->Rut }}</td>
           <td>{{ $user->Nombre }}</td>
           <td>{{ $user->Apellido }}</td>
@@ -42,4 +46,4 @@
   </table>
 <div>
 </div>
-@endsection
+@endsection+

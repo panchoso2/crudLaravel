@@ -162,6 +162,9 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+        // to resize images
+        'Intervention\Image\ImageServiceProvider',
+
         /*
          * Package Service Providers...
          */
@@ -226,6 +229,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        // to resize images
+        'Image' => 'Intervention\Image\Facades\Image',
 
     ],
 

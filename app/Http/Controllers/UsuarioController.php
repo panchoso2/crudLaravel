@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Usuario;
-
+use Image;
 
 class UsuarioController extends Controller
 {
@@ -57,7 +57,15 @@ class UsuarioController extends Controller
         // check if file is image
         if ( exif_imagetype($image) ){
             $new_name = rand() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'),$new_name);
+
+            // resize image and keep aspect ratio
+            $new_image = Image::make( $image->path() );
+            $new_image->resize(200, 200, function( $constraint ){
+                $constraint->aspectRatio();
+            })->save(public_path('images' . '/' . $new_name));
+
+
+            // $image->move(public_path('images'), 'segunda.jpg');
             return response()->json([
                 'message' => $new_name,
             ]);
@@ -71,23 +79,7 @@ class UsuarioController extends Controller
 
     public function store(Request $request)
     {
-        // manage avatar image
-        if ( $request->hasFile('avatarInput') ) {
-            $file = $request->file('avatarInput');
-
-            // check if file is image
-            if ( exif_imagetype($file) ){
-                // set a unique name
-                $avatarName = time().$file->getClientOriginalName();
-                // store file in folder
-                $file->move(public_path().'/images/', $avatarName);
-            } else {
-                $avatarName = 'default.png';
-            }
-        } else {
-            $avatarName = 'default.png';
-        }
-
+        
         // create new Usuario and set attributes
         $user = new Usuario;
 
@@ -96,7 +88,7 @@ class UsuarioController extends Controller
         $user->Rut = $request->input('rutInput');
         $user->Email = $request->input('emailInput');
         $user->Password = $request->input('passwordInput');
-        $user->Avatar = $avatarName;
+        $user->Avatar = $request->input('avatarName');
 
         // format date type to mysql format
         $newDate = date("Y-m-d", strtotime($request->input('dateInput')));

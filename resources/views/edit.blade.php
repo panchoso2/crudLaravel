@@ -229,6 +229,7 @@
         });
     });
 
+
     // upload and validate image by ajax. Validate and submit form
     $(document).ready(function(){
         $('#userForm').on('submit', function(event){
@@ -245,6 +246,7 @@
                     if ( data.message == 'false' ){
                         document.getElementById('avatarError').innerHTML = 'Archivo no válido';
                     } else {
+                        
                         // compare old and new data
                         var rutInput = document.getElementById('rutInput').value;
                         var emailInput = document.getElementById('emailInput').value;
