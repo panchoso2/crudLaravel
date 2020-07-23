@@ -117,25 +117,7 @@ class UsuarioController extends Controller
    
     public function update(Request $request)
     {
-        /*
-        // manage avatar image
-        if ( $request->hasFile('avatarInput') ) {
-            $file = $request->file('avatarInput');
-
-            // check if file is image
-            if ( exif_imagetype($file) ){
-                // set a unique name
-                $avatarName = time().$file->getClientOriginalName();
-                // store file in folder
-                $file->move(public_path().'/images/', $avatarName);
-            } else {
-                $avatarName = 'default.png';
-            }
-        } else {
-            $avatarName = 'default.png';
-        }
-        */
-
+        
         // find Usuario and update all attributes
         $id = $request->input('id');
         $user = Usuario::find($id);

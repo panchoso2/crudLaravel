@@ -34,7 +34,7 @@
           <td>{{ $user->Apellido }}</td>
           <td>{{ $user->Email }}</td>
           <td>{{ date("d-m-Y",strtotime($user->FechaNacimiento)) }}</td>
-          <td><a href="{{ url('/destroy/' . $user->id) }}" style="color:#FF0000;">Eliminar</a></td>
+          <td><a href="{{ url('/destroy/' . $user->id) }}" style="color:#FF0000;" onclick="return confirm('¿Está seguro/a que desea eliminar a este Usuario?')">Eliminar</a></td>
           <td><a href="{{ url('/edit/' . $user->id) }}">Editar</a></td>
         </tr>
         @endforeach

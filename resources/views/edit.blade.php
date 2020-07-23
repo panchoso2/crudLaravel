@@ -254,7 +254,7 @@
                         // image is still the same
                         if (data.message == 'null' ){
                             $('input[name="avatarName"]').val('{{ $user->Avatar }}');
-                        } else {
+                        } else { // a new image has been uploaded
                             $('input[name="avatarName"]').val(data.message);
                         }
                         
