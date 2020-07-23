@@ -228,6 +228,7 @@
         });
     });
 
+
     // upload and validate image by ajax. Submit form
     $(document).ready(function(){
         $('#userForm').on('submit', function(event){
@@ -241,8 +242,11 @@
                 cache: false,
                 processData: false,
                 success: function(data){
-                    if ( data.message == 'false' ){
+                    if ( data.message == 'false' ) {
                         document.getElementById('avatarError').innerHTML = 'Archivo no válido';
+                    } else if ( data.message == 'null' ) {
+                        document.getElementById('avatarName').value = 'default.png';
+                        event.currentTarget.submit();
                     } else {
                         document.getElementById('avatarName').value = data.message;
                         event.currentTarget.submit();
@@ -251,7 +255,6 @@
             })
         })
     });
-
 
 
     // validate if everything is valid
@@ -263,14 +266,13 @@
             return true;
         }
     }
-
-
+    
 </script>
 
 
 @section('content')
     <h1>Crear Usuario</h1> 
-    <form action="/store" method="POST" role="form" onsubmit="return validateSubmit()" enctype="multipart/form-data" id="userForm">
+    <form action="/store" method="POST" role="form" onsubmit="return validateSubmit()" enctype="multipart/form-data" id="userForm" autocomplete="off">
         @csrf
         <div class="form-group">
             <label for="nameInput">Nombres</label>
@@ -285,14 +287,13 @@
             <input required type="text" class="form-control" id="rutInput"  placeholder="Ingrese su Rut" name="rutInput">
             <span class="badge badge-light" id="rutError"></span>
         </div>
-        
         <div style="display: inline-block; float: right; width:45%; margin: 0px 0px 16px">
             <label for="dateInput">Fecha de nacimiento</label>
             <input required type="text" class="form-control" id="dateInput" placeholder="Seleccione su fecha de nacimiento" name="dateInput" onkeypress="validar(event)" autocomplete="off">
         </div>
         <div class="form-group">
             <label for="emailInput">Email</label>
-            <input required type="email" class="form-control" id="emailInput" placeholder="Ingrese su Email" name="emailInput" maxlength="255">
+            <input required type="email" class="form-control" id="emailInput" placeholder="Ingrese su Email" name="emailInput" maxlength="255" autocomplete="nope">
             <span class="badge badge-light" id="emailError"></span>
         </div>
         <div class="form-group">
@@ -310,11 +311,7 @@
             <input type="hidden" id="avatarName" name="avatarName" value="">
             <span class="badge badge-light" id="avatarError"></span>
         </div>
-
-        <img src="" id="output">
-
-
-
         <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+        <button type="button" class="btn btn-primary" id="backButton" style="float:left" onclick="window.location='{{ url("/index") }}'">Volver</button>
     </form>
 @endsection

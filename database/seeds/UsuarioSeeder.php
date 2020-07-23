@@ -9,6 +9,8 @@ class UsuarioSeeder extends Seeder
     {   
         // generate 100 entries with random data
         // 3 images were provided as example
+
+        //  NOTE: Rut does not satisfies rut's rules, here its just a random number
         $faker = \Faker\Factory::create();
 
         for($i = 0; $i <= 100; $i++):

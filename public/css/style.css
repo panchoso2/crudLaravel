@@ -1,0 +1,77 @@
+.table,
+table {
+    width: 60%;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin: auto;
+}
+
+.table th {
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table td {
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    text-align: center;
+    vertical-align: middle;
+}
+
+th {
+    text-align: center;
+}
+
+h1,
+h2 {
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+a.navbar-brand {
+    margin-left: 50px;
+}
+
+form {
+    margin: auto;
+    width: 40%;
+    padding: 20px;
+}
+
+button.btn.btn-primary {
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+    float: right;
+    margin-top: 20px;
+}
+
+.image-cropper {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.profile-pic {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+}
+
+input[readonly] {
+    cursor: text;
+    background-color: #fff;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    cursor: text;
+    background-color: #fff;
+}

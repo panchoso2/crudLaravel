@@ -246,7 +246,7 @@
                     if ( data.message == 'false' ){
                         document.getElementById('avatarError').innerHTML = 'Archivo no válido';
                     } else {
-                        
+
                         // compare old and new data
                         var rutInput = document.getElementById('rutInput').value;
                         var emailInput = document.getElementById('emailInput').value;
@@ -284,43 +284,13 @@
         })
     });
 
-    /*
-    // this function also verifies if the input data is the same that the prefilled
-    function validateSubmit(){
-
-        var rutInput = document.getElementById('rutInput').value;
-        var emailInput = document.getElementById('emailInput').value;
-        var passwordInput = document.getElementById('passwordInput').value;
-        var repeatPasswordInput = document.getElementById('repeatPasswordInput').value;
-
-        // compare data
-        if (user['Rut'] == rutInput) {
-            rutValidator = true;
-        }
-        if (user['Email'] == emailInput) {
-            emailValidator = true;
-        }
-        if ((user['Password'] == passwordInput) && (user['Password'] == repeatPasswordInput)) {
-            passwordValidator = true;
-        }
-
-
-        // validate everything before submit
-        if (rutValidator == false || emailValidator == false || passwordValidator == false){
-            document.getElementById('submitButton').disabled = true;
-            return false;
-        } else {
-            return true;
-        }
-    }
-    */
 
 </script>
 
 
 @section('content')
     <h1>Editar Usuario</h1> 
-    <form action="/update" method="POST" role="form" id="userForm">
+    <form action="/update" method="POST" role="form" id="userForm" autocomplete="off">
         @csrf
         <div class="form-group">
             <label for="nameInput">Nombres</label>
@@ -342,7 +312,7 @@
         </div>
         <div class="form-group">
             <label for="emailInput">Email</label>
-            <input required type="email" class="form-control" id="emailInput" placeholder="Ingrese su Email" name="emailInput" value="{{ $user->Email }}" maxlength="255">
+            <input required type="email" class="form-control" id="emailInput" placeholder="Ingrese su Email" name="emailInput" value="{{ $user->Email }}" maxlength="255" autocomplete="nope">
             <span class="badge badge-light" id="emailError"></span>
         </div>
         <div class="form-group">
@@ -356,7 +326,9 @@
         </div>
         <div class="form-group">
             <label for="oldAvatarInput">Imagen de Perfil Actual</label>
-            <img src="../images/{{ $user->Avatar }}" style="display: block; width:100%; object-fit: fill; max-width: 80px; max-height: 80px; border-radius:50%"/>
+            <div class="image-cropper">
+                <img src="../images/{{ $user->Avatar }}" class="profile-pic">
+              </div>
             <br>
             <label for="avatarInput">Subir nueva imagen</label>
             <br>
@@ -366,5 +338,6 @@
         <input type="hidden" id="userId" name="id" value="{{ $user->id }}">
         <input type="hidden" id="avatarName" name="avatarName" value="">
         <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+        <button type="button" class="btn btn-primary" id="backButton" style="float:left" onclick="window.location='{{ url("/index") }}'">Volver</button>
     </form>
 @endsection

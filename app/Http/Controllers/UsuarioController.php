@@ -12,7 +12,7 @@ class UsuarioController extends Controller
 
     public function index()
     {
-        $users = Usuario::orderBy('id','DESC')->paginate(10);
+        $users = Usuario::orderBy('id','DESC')->paginate(7);
         return view('index', compact('users'));
     }
 
@@ -129,6 +129,9 @@ class UsuarioController extends Controller
     {
         $user = Usuario::findOrFail($id);
         $user->delete();
+
+        // delete user image
+
         return redirect('index');
     }
    
