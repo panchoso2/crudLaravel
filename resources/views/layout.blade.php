@@ -18,6 +18,8 @@
       td {
         padding: 15px;
         background-color: rgba(255,255,255,0.2);
+        text-align: center;
+        vertical-align: center;
       }
 
       th {
@@ -36,7 +38,7 @@
             background-color: rgba(255,255,255,0.3);
           }
         }
-        td {
+        td > * {
           position: relative;
           &:hover {
             &:before {
@@ -48,6 +50,7 @@
               bottom: -9999px;
               background-color: rgba(255,255,255,0.2);
               z-index: -1;
+              vertical-align: middle;
             }
           }
         }

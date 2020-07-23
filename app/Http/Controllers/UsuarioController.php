@@ -45,6 +45,22 @@ class UsuarioController extends Controller
 
     public function store(Request $request)
     {
+        // manage avatar image
+        if ( $request->hasFile('avatarInput') ) {
+            $file = $request->file('avatarInput');
+
+            // check if file is image
+            if ( exif_imagetype($file) ){
+                // set a unique name
+                $avatarName = time().$file->getClientOriginalName();
+                // store file in folder
+                $file->move(public_path().'/images/', $avatarName);
+            } else {
+                $avatarName = 'default.png';
+            }
+        } else {
+            $avatarName = 'default.png';
+        }
 
         // create new Usuario and set attributes
         $user = new Usuario;
@@ -54,6 +70,7 @@ class UsuarioController extends Controller
         $user->Rut = $request->input('rutInput');
         $user->Email = $request->input('emailInput');
         $user->Password = $request->input('passwordInput');
+        $user->Avatar = $avatarName;
 
         // format date type to mysql format
         $newDate = date("Y-m-d", strtotime($request->input('dateInput')));
@@ -63,6 +80,8 @@ class UsuarioController extends Controller
 
         return redirect('index');
     }
+
+    
 
     /*
     public function show($id)
@@ -101,7 +120,6 @@ class UsuarioController extends Controller
         $user = Usuario::findOrFail($id);
         $user->delete();
         return redirect('index');
-
     }
    
 }

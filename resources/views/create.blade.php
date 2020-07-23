@@ -10,7 +10,7 @@
     var rutValidator = false;
     var emailValidator = false;
     var passwordValidator = false;
-
+    var avatarValidator = false;
 
     // datepicker
     $( function() {
@@ -228,7 +228,47 @@
         });
     });
 
+    /*
+    // validate image
+    $(function(){
+        $('#avatarInput').on('change', function(){
+            
+            var avatar = $(this).val();
+            var avatarErrorSpan = document.getElementById('avatarError');
 
+            if ( avatar == null ){
+                avatarValidator = true;
+                document.getElementById('submitButton').disabled = false;
+                return true;
+            }
+            
+            $.ajax({
+                type: 'post',
+                url: "{{ route('ajaxAvatar') }}",
+                data: {
+                    avatar: avatar,
+                    "_token": $("meta[name='csrf-token']").attr("content")
+                },
+                success: function(data){
+                    if (data){
+                        $('#avatarError').html('Archivo no válido');
+                        document.getElementById('submitButton').disabled = true;
+                        avatarValidator = false;
+                        return false;
+                    }
+                    else{
+                        $('#avatarError').html('');
+                        document.getElementById('submitButton').disabled = false;
+                        avatarValidator = true;
+                    }
+                }
+            });
+        });
+    });
+    */
+
+
+    // validate if everything is valid
     function validateSubmit(){
         if (rutValidator == false || emailValidator == false || passwordValidator == false){
             document.getElementById('submitButton').disabled = true;
@@ -243,7 +283,7 @@
 
 @section('content')
     <h1>Crear Usuario</h1> 
-    <form action="/store" method="POST" role="form" onsubmit="return validateSubmit()">
+    <form action="/store" method="POST" role="form" onsubmit="return validateSubmit()" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="nameInput">Nombres</label>
@@ -276,6 +316,11 @@
             <label for="repeatPasswordInput">Repita su Contraseña</label>
             <input required type="password" class="form-control" id="repeatPasswordInput" placeholder="Repita su Contraseña" name="repeatPasswordInput">
             <span class="badge badge-light" id="passwordError"></span>
+        </div>
+        <div class="form-group">
+            <label for="avatarInput">Imágen de Perfil</label>
+            <input type="file" accept="image/*" id="avatarInput" placeholder="Seleccione una imagen" name="avatarInput">
+            <span class="badge badge-light" id="avatarError"></span>
         </div>
         
         <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>

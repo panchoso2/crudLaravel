@@ -12,3 +12,4 @@ To-Do-List:
 10. arreglar calendario
 12. fusionar create y edit
 13. cambiar validaciones a unica funcion
+14. revisar caso de ingreso cuando falla algo y no permite reenviar el formulario

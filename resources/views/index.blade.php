@@ -28,11 +28,11 @@
     <tbody>
         @foreach($users as $user)
         <tr>
-          <td>Foto</td>
-          <td>{{$user->Rut}}</td>
-          <td>{{$user->Nombre}}</td>
-          <td>{{$user->Apellido}}</td>
-          <td>{{$user->Email}}</td>
+          <td><img src="images/{{ $user->Avatar }}" style="display: block; width:100%; object-fit: fill; max-width: 80px; max-height: 80px; border-radius:50%"/></td>
+          <td>{{ $user->Rut }}</td>
+          <td>{{ $user->Nombre }}</td>
+          <td>{{ $user->Apellido }}</td>
+          <td>{{ $user->Email }}</td>
           <td>{{ date("d-m-Y",strtotime($user->FechaNacimiento)) }}</td>
           <td><a href="{{ url('/destroy/' . $user->id) }}" style="color:#FF0000;">Eliminar</a></td>
           <td><a href="{{ url('/edit/' . $user->id) }}">Editar</a></td>

@@ -301,6 +301,10 @@
             <input required type="password" class="form-control" id="repeatPasswordInput" placeholder="Repita su Contraseña" name="repeatPasswordInput" value="{{ $user->Password }}">
             <span class="badge badge-light" id="passwordError"></span>
         </div>
+        <div class="form-group">
+            <label for="avatarInput">Imágen de Perfil</label>
+            <input type="file"  id="avatarInput" placeholder="Seleccione una imagen" name="avatarInput">
+        </div>
         <input type="hidden" id="userId" name="id" value="{{ $user->id }}">
         <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
     </form>
