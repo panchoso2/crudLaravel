@@ -1,4 +1,5 @@
-1. Se creo una tabla usuarios para esto
+1. Falta validar la imagen de perfil por el lado del cliente y avisarle de esto.
+2. Mejorar validaciones por parte del servidor
 
 
 To-Do-List:

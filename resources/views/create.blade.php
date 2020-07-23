@@ -228,44 +228,29 @@
         });
     });
 
-    /*
-    // validate image
-    $(function(){
-        $('#avatarInput').on('change', function(){
-            
-            var avatar = $(this).val();
-            var avatarErrorSpan = document.getElementById('avatarError');
-
-            if ( avatar == null ){
-                avatarValidator = true;
-                document.getElementById('submitButton').disabled = false;
-                return true;
-            }
-            
+    // upload and validate image by ajax
+    $(document).ready(function(){
+        $('#userForm').on('submit', function(event){
+            event.preventDefault();
             $.ajax({
-                type: 'post',
                 url: "{{ route('ajaxAvatar') }}",
-                data: {
-                    avatar: avatar,
-                    "_token": $("meta[name='csrf-token']").attr("content")
-                },
+                method: 'post',
+                data: new FormData(this),
+                dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
                 success: function(data){
-                    if (data){
-                        $('#avatarError').html('Archivo no válido');
-                        document.getElementById('submitButton').disabled = true;
-                        avatarValidator = false;
-                        return false;
-                    }
-                    else{
-                        $('#avatarError').html('');
-                        document.getElementById('submitButton').disabled = false;
-                        avatarValidator = true;
+                    if ( data.message == 'false' ){
+                        document.getElementById('avatarError').innerHTML = 'Archivo no válido';
+                    } else {
+                        event.currentTarget.submit();
                     }
                 }
-            });
-        });
+            })
+        })
     });
-    */
+
 
 
     // validate if everything is valid
@@ -283,15 +268,15 @@
 
 @section('content')
     <h1>Crear Usuario</h1> 
-    <form action="/store" method="POST" role="form" onsubmit="return validateSubmit()" enctype="multipart/form-data">
+    <form action="/store" method="POST" role="form" onsubmit="return validateSubmit()" enctype="multipart/form-data" id="userForm">
         @csrf
         <div class="form-group">
             <label for="nameInput">Nombres</label>
-            <input required type="text" class="form-control" id="nameInput"  placeholder="Ingrese sus nombres" name="nameInput">
+            <input required type="text" class="form-control" id="nameInput"  placeholder="Ingrese sus nombres" name="nameInput" maxlength="255">
         </div>
         <div class="form-group">
             <label for="lastNameInput">Apellidos</label>
-            <input required type="text" class="form-control" id="lastNameInput"  placeholder="Ingrese sus apellidos" name="lastNameInput">
+            <input required type="text" class="form-control" id="lastNameInput"  placeholder="Ingrese sus apellidos" name="lastNameInput" maxlength="255">
         </div>
         <div style="display: inline-block; width:45%; margin: 0px 0px 16px">
             <label for="rutInput">Rut</label>
@@ -305,20 +290,20 @@
         </div>
         <div class="form-group">
             <label for="emailInput">Email</label>
-            <input required type="email" class="form-control" id="emailInput" placeholder="Ingrese su Email" name="emailInput">
+            <input required type="email" class="form-control" id="emailInput" placeholder="Ingrese su Email" name="emailInput" maxlength="255">
             <span class="badge badge-light" id="emailError"></span>
         </div>
         <div class="form-group">
             <label for="passwordInput">Contraseña</label>
-            <input required type="password" class="form-control" id="passwordInput" placeholder="Ingrese su Contraseña" name="passwordInput">
+            <input required type="password" class="form-control" id="passwordInput" placeholder="Ingrese su Contraseña" name="passwordInput" maxlength="255">
         </div>
         <div class="form-group">
             <label for="repeatPasswordInput">Repita su Contraseña</label>
-            <input required type="password" class="form-control" id="repeatPasswordInput" placeholder="Repita su Contraseña" name="repeatPasswordInput">
+            <input required type="password" class="form-control" id="repeatPasswordInput" placeholder="Repita su Contraseña" name="repeatPasswordInput" maxlength="255">
             <span class="badge badge-light" id="passwordError"></span>
         </div>
         <div class="form-group">
-            <label for="avatarInput">Imágen de Perfil</label>
+            <label for="avatarInput">Imagen de Perfil</label>
             <input type="file" accept="image/*" id="avatarInput" placeholder="Seleccione una imagen" name="avatarInput">
             <span class="badge badge-light" id="avatarError"></span>
         </div>

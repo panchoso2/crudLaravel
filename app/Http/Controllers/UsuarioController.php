@@ -41,7 +41,26 @@ class UsuarioController extends Controller
     
        return $user;
     }
+
     
+    public function ajaxAvatar(Request $request)
+    {
+        $image = $request->file('avatarInput');
+
+        // check if file is image
+        if ( exif_imagetype($image) ){
+            $new_name = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'),$new_name);
+            return response()->json([
+                'message' => 'true',
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'false',
+            ]);
+        }
+    }
+
 
     public function store(Request $request)
     {

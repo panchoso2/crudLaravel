@@ -266,16 +266,16 @@
 
 
 @section('content')
-    <h1>Crear Usuario</h1> 
+    <h1>Editar Usuario</h1> 
     <form action="/update" method="POST" role="form" onsubmit="return validateSubmit()">
         @csrf
         <div class="form-group">
             <label for="nameInput">Nombres</label>
-            <input required type="text" class="form-control" id="nameInput"  placeholder="Ingrese sus nombres" name="nameInput" value="{{ $user->Nombre }}">
+            <input required type="text" class="form-control" id="nameInput"  placeholder="Ingrese sus nombres" name="nameInput" value="{{ $user->Nombre }}" maxlength="255">
         </div>
         <div class="form-group">
             <label for="lastNameInput">Apellidos</label>
-            <input required type="text" class="form-control" id="lastNameInput"  placeholder="Ingrese sus apellidos" name="lastNameInput"  value="{{ $user->Apellido }}">
+            <input required type="text" class="form-control" id="lastNameInput"  placeholder="Ingrese sus apellidos" name="lastNameInput"  value="{{ $user->Apellido }}" maxlength="255">
         </div>
         <div style="display: inline-block; width:45%; margin: 0px 0px 16px">
             <label for="rutInput">Rut</label>
@@ -289,20 +289,24 @@
         </div>
         <div class="form-group">
             <label for="emailInput">Email</label>
-            <input required type="email" class="form-control" id="emailInput" placeholder="Ingrese su Email" name="emailInput" value="{{ $user->Email }}">
+            <input required type="email" class="form-control" id="emailInput" placeholder="Ingrese su Email" name="emailInput" value="{{ $user->Email }}" maxlength="255">
             <span class="badge badge-light" id="emailError"></span>
         </div>
         <div class="form-group">
             <label for="passwordInput">Contraseña</label>
-            <input required type="password" class="form-control" id="passwordInput" placeholder="Ingrese su Contraseña" name="passwordInput" value="{{ $user->Password }}">
+            <input required type="password" class="form-control" id="passwordInput" placeholder="Ingrese su Contraseña" name="passwordInput" value="{{ $user->Password }}" maxlength="255">
         </div>
         <div class="form-group">
             <label for="repeatPasswordInput">Repita su Contraseña</label>
-            <input required type="password" class="form-control" id="repeatPasswordInput" placeholder="Repita su Contraseña" name="repeatPasswordInput" value="{{ $user->Password }}">
+            <input required type="password" class="form-control" id="repeatPasswordInput" placeholder="Repita su Contraseña" name="repeatPasswordInput" value="{{ $user->Password }}" maxlength="255">
             <span class="badge badge-light" id="passwordError"></span>
         </div>
         <div class="form-group">
-            <label for="avatarInput">Imágen de Perfil</label>
+            <label for="oldAvatarInput">Imagen de Perfil Actual</label>
+            <img src="../images/{{ $user->Avatar }}" style="display: block; width:100%; object-fit: fill; max-width: 80px; max-height: 80px; border-radius:50%"/>
+            <br>
+            <label for="avatarInput">Subir nueva imagen</label>
+            <br>
             <input type="file"  id="avatarInput" placeholder="Seleccione una imagen" name="avatarInput">
         </div>
         <input type="hidden" id="userId" name="id" value="{{ $user->id }}">
