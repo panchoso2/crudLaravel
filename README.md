@@ -1,6 +1,6 @@
 # CRUD de Usuarios
 
-Este proyecto consiste en un CRUD de Usuarios, para postular a la empresa Webtres.
+Este proyecto consiste en un CRUD de Usuarios.
 
 
 
