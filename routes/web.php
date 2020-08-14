@@ -13,3 +13,6 @@ Route::post('/store', 'UsuarioController@store');
 Route::get('destroy/{id}', 'UsuarioController@destroy');
 Route::get('/edit/{id}', 'UsuarioController@edit');
 Route::post('/update', 'UsuarioController@update');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
